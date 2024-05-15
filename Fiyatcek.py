@@ -41,7 +41,8 @@ def data(url,scroll):
 
         
             try:
-                fiyat = float(fiyat_text.replace('TL', '').replace(',', ''))
+                fiyat_text = fiyat_text.replace('TL', '').replace(',', '').replace('.', '')
+                fiyat = float(fiyat_text)
             except ValueError:
                 print(f"Fiyat Dönüştürme Hatası: {fiyat_text}")
                 continue 
@@ -82,7 +83,10 @@ previous_products_poco = {}
 
 api_id = '22569112'
 api_hash = '46f5072df87ee8dae7ce4fd138d52df9'
-target_username = '+905510651336'
+bot_token = '6862866677:AAHS9zLBJF7iR3sRR_TJ5nDWsAQNfTEjLy8'
+target_username = '+905543529640'
+chatid= '1385445024'
+group_id = -1002090703470
 
 while True:
     samsung = data(url="https://www.trendyol.com/sr?wc=109460&wb=794&sst=PRICE_BY_ASC",scroll=32)
@@ -100,16 +104,14 @@ while True:
         
         if product_name in previous_products_samsung:
             previous_price = previous_products_samsung[product_name]
-            if product_price < previous_price:
-                
-               message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
-               with Client ("my_account",api_id,api_hash) as app:
+            
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
+                  message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
+                  with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
             previous_products_samsung[product_name] = product_price
-        """new_products_samsung = [product for product in samsung if product not in previous_products_samsung.keys()]
-    for product in new_products_samsung:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}") """
+    
           
     for product in apple:
         product_name = product[0]
@@ -118,16 +120,14 @@ while True:
         if product_name in previous_products_apple:
             previous_price = previous_products_apple[product_name]
             
-            if product_price < previous_price:
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
                   message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
                   with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
-            previous_products_apple[product_name] = product_price  
-    """ new_products_apple = [product for product in apple if product not in previous_products_apple.keys()]
-    for product in new_products_apple:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}") """
-    
+            previous_products_apple[product_name] = product_price   
+  
+  
     
     for product in xiaomi:
         product_name = product[0]
@@ -135,15 +135,13 @@ while True:
         
         if product_name in previous_products_xiaomi:
             previous_price = previous_products_xiaomi[product_name]
-            if product_price < previous_price:
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
                   message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
                   with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
-            previous_products_xiaomi[product_name] = product_price 
-    """ new_products_xiaomi = [product for product in xiaomi if product[0] not in previous_products_xiaomi.keys()]
-    for product in new_products_xiaomi:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}")   """ 
+            previous_products_xiaomi[product_name] = product_price  
+   
     
     for product in huawei:
         product_name = product[0]
@@ -151,15 +149,13 @@ while True:
         
         if product_name in previous_products_huawei:
             previous_price = previous_products_huawei[product_name]
-            if product_price < previous_price:
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
                   message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
                   with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
-            previous_products_huawei[product_name] = product_price  
-    """ new_products_huawei = [product for product in huawei if product[0] not in previous_products_huawei.keys()]
-    for product in new_products_huawei:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}")   """  
+            previous_products_huawei[product_name] = product_price   
+  
     
     for product in oppo:
         product_name = product[0]
@@ -167,15 +163,13 @@ while True:
         
         if product_name in previous_products_oppo:
             previous_price = previous_products_oppo[product_name]
-            if product_price < previous_price:
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
                   message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
                   with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
-            previous_products_oppo[product_name] = product_price  
-    """ new_products_oppo = [product for product in oppo if product[0] not in previous_products_oppo.keys()]
-    for product in new_products_oppo:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}")  """  
+            previous_products_oppo[product_name] = product_price   
+  
     
     for product in realme:
         product_name = product[0]
@@ -183,15 +177,13 @@ while True:
         
         if product_name in previous_products_realme:
             previous_price = previous_products_realme[product_name]
-            if product_price < previous_price:
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
                   message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
                   with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
-            previous_products_realme[product_name] = product_price  
-    """  new_products_realme = [product for product in realme if product[0] not in previous_products_realme.keys()]
-    for product in new_products_realme:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}")  """      
+            previous_products_realme[product_name] = product_price   
+        
     
     for product in poco:
         product_name = product[0]
@@ -199,15 +191,13 @@ while True:
         
         if product_name in previous_products_poco:
             previous_price = previous_products_poco[product_name]
-            if product_price < previous_price:
+            if product_price < previous_price and (previous_price - product_price) / previous_price >= 0.02:
                   message=(f"{product_name} ürününün fiyatı değişti!\nEski Fiyat: {previous_price}\nYeni Fiyat: {product_price}\nÜrün Linki: {product[2]}")
                   with Client ("my_account",api_id,api_hash) as app:
                    app.send_message(target_username,message)
         else:
             previous_products_poco[product_name] = product_price   
-    """   new_products_poco = [product for product in poco if product[0] not in previous_products_poco.keys()]
-    for product in new_products_poco:
-        print(f"Yeni ürün eklendi!\nÜrün Adı: {product[0]}\nFiyat: {product[1]}\nÜrün Linki: {product[2]}")"""
+    
                   
     
 
